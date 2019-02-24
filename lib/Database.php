@@ -11,7 +11,7 @@ class Database {
 
   public function __construct() {
     // Set DSN
-    $dsn = 'mysql:host='. $this->host .':dbname='. $this->dbname;
+    $dsn = 'mysql:host='. $this->host .';dbname='. $this->dbname;
     
     // Set Options
     $options = array(
@@ -24,6 +24,7 @@ class Database {
       $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
     } catch(PDOException $e) {
       $this->error = $e->getMessage();
+      echo $this->error;
     }
   }
 
@@ -34,13 +35,13 @@ class Database {
   public function bind($param, $value, $type = null) {
     if(is_null($type)) {
       switch(true) {
-        case is_int ($value) :
+        case is_int($value) :
           $type = PDO::PARAM_INT;
           break;
-        case is_bool ($value) :
+        case is_bool($value) :
           $type = PDO::PARAM_BOOL;
           break;
-        case is_null ($value) :
+        case is_null($value) :
           $type = PDO::PARAM_NULL;
           break;
         default:
